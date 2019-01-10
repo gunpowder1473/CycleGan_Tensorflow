@@ -91,11 +91,11 @@ Notice that we used `tf.app.flags` to control the options shown below, you need 
 
 1. Do not use `BATCH` if you do not have enough GPU memory to support a big batch, `INSTANCE` performs much better when set `batch_size` to 1.
 
-2. `USE_E` is a improvement. I found it works in style transfer for summer2winter, which is the paper's author's datasheet, see comparison in next sector. But have not proved on other datasheet.
+2. `USE_E` is a improvement. I found it works in style transfer for summer2winter, which is the paper's author's data set, see comparison in next sector. But have not proved on other data set.
 
 3. By default, every training step cost 0.3s on GTX1080Ti.
 
-4. Author's datasheet can be found in https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/
+4. Author's data set can be found in https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/
 
 ## Result
 
