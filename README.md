@@ -20,13 +20,13 @@ To get started with training you can run
 ```
 python GANTrain.py
 ```
-Notice that we used `tf.app.flags` to control the options shown below, you need to edit them in `GANTrain.py`:
+Notice that I used `tf.app.flags` to control the options shown below, you need to edit them in `GANTrain.py`:
 
  - `imgA` : the location of the image A saved, image A is one of two input images of cycleGan.
 
  - `imgB` : the location of the image B saved, image B is one of two input images of cycleGan.
 
- - `imgC` : the location of the validate image saved, we now using TensorBoard and the relevant codes have been commented out.This option is abandoned for now.
+ - `imgC` : the location of the validate image saved, I now using TensorBoard and the relevant codes have been commented out.This option is abandoned for now.
 
  - `val_out` : the location of result of validate image saved.Abandoned too.
 
@@ -67,7 +67,7 @@ To get started with testing you can run
 ```
 python GANTest.py
 ```
-Notice that we used `tf.app.flags` to control the options shown below, you need to edit them in `GANTest.py`:
+Notice that I used `tf.app.flags` to control the options shown below, you need to edit them in `GANTest.py`:
 
  - `input` : the location of the input image saved.
 
