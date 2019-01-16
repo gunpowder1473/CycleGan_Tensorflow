@@ -48,7 +48,7 @@ def generateBatch(folder, batch_shape):
                 batch[i] = encode(batch[i])
             yield batch
         except:
-            return
+            continue
 
 
 def train():
