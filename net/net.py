@@ -35,8 +35,8 @@ def convLayer(net, num_filters, filter_size, name, relu, strides=1, bias=False, 
 
 
 def residualBlock(net, filter_num, filter_size, name, pad, relu='RELU', Norm='INSTANCE', training=True):
-    tmp = convLayer(net, filter_num, filter_size, name, 1, pad=pad, Norm=Norm, training=training)
-    return net + convLayer(tmp, filter_num, filter_size, name + '_1', strides=1, relu=relu, pad=pad, Norm=Norm,
+    tmp = convLayer(net, filter_num, filter_size, name, strides=1, relu=relu, pad=pad, Norm=Norm, training=training)
+    return net + convLayer(tmp, filter_num, filter_size, name + '_1', strides=1, relu=False, pad=pad, Norm=Norm,
                            training=training)
 
 
