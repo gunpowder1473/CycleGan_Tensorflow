@@ -22,6 +22,7 @@ tf.app.flags.DEFINE_string('Norm', 'BATCH', 'Choose to use Batchnorm or instance
 tf.app.flags.DEFINE_bool('USE_E', False, 'Choose to use Edge or not')
 tf.app.flags.DEFINE_float('learning_rate', 2e-4, 'The init learning rate')
 tf.app.flags.DEFINE_float('decay', 1e-6, 'The init learning rate decay')
+tf.app.flags.DEFINE_integer('multi_threads', 5, 'The number of thread used')
 tf.app.flags.DEFINE_integer('start_step', 100000, 'The start step for linear decay')
 tf.app.flags.DEFINE_integer('end_step', 200000, 'The end step for linear decay')
 tf.app.flags.DEFINE_integer('max_to_keep', 10, 'The maximum ckpt num')
@@ -168,9 +169,11 @@ def train():
         with tf.device('/device:CPU:0'):
             iteration = global_step1.eval() + 1
 
-        enqueue_thread = threading.Thread(target=enqueue, args=[sess])
-        enqueue_thread.isDaemon()
-        enqueue_thread.start()
+      enqueue_thread = []
+        for i in range(FLAGS.multi_threads):
+            enqueue_thread.append(threading.Thread(target=enqueue, args=[sess]))
+            enqueue_thread[i].isDaemon()
+            enqueue_thread[i].start()
         threads = tf.train.start_queue_runners(coord=coord, sess=sess)
 
         while True:
