@@ -45,10 +45,16 @@ def encode(img):
 
 
 def getFiles(imgpath):
-    files = os.listdir(imgpath)
     paths = []
-    for x in files:
-        paths.append(os.path.join(imgpath, x))
+    def walk(path):
+        files = os.listdir(path)
+        for x in files:
+            p = os.path.join(path, x)
+            if os.path.isdir(p):
+                walk(p)
+            else:
+                paths.append(os.path.join(imgpath, x))
+    walk(imgpath)
     return paths
 
 
