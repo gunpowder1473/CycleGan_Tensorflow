@@ -37,15 +37,16 @@ tf.app.flags.DEFINE_integer('img_size', 256, 'The size of input img')
 
 FLAGS = tf.app.flags.FLAGS
 
+files_content = getFiles(FLAGS.img_content, 'content')
+files_style = getFiles(FLAGS.img_style, 'style')
 
-def generateBatch(folder, batch_shape):
-    files = getFiles(folder)
+def generateBatch(files, batch_shape):
     while True:
         try:
             batch = np.zeros(batch_shape, dtype=np.float32)
             choosed = random.sample(files, batch_shape[0])
             for i, s in enumerate(choosed):
-                batch[i] = cv2.resize(getImg(s), (FLAGS.img_size, FLAGS.img_size))
+                batch[i] = augmentor(resizeTo(getImg(s), 800), False)
                 batch[i] = encode(batch[i])
             yield batch
         except:
@@ -149,8 +150,8 @@ def train():
         coord = tf.train.Coordinator()
 
         def enqueue(sess):
-            imgA = generateBatch(FLAGS.imgA, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
-            imgB = generateBatch(FLAGS.imgB, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
+            imgA = generateBatch(files_content, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
+            imgB = generateBatch(files_style, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
             while not coord.should_stop():
                 imgA_batch = next(imgA)
                 imgB_batch = next(imgB)
