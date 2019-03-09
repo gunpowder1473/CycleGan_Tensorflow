@@ -44,8 +44,9 @@ def encode(img):
     return img / 127.5 - 1.0
 
 
-def getFiles(imgpath):
+def getFiles(imgpath, name):
     paths = []
+
     def walk(path):
         files = os.listdir(path)
         for x in files:
@@ -54,7 +55,9 @@ def getFiles(imgpath):
                 walk(p)
             else:
                 paths.append(os.path.join(imgpath, x))
+
     walk(imgpath)
+    print(name + 'Load Finished')
     return paths
 
 
