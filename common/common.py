@@ -54,7 +54,7 @@ def getFiles(imgpath, name):
             if os.path.isdir(p):
                 walk(p)
             else:
-                paths.append(os.path.join(imgpath, x))
+                paths.append(p)
 
     walk(imgpath)
     print(name + 'Load Finished')
