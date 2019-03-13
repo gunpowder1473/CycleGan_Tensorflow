@@ -79,22 +79,26 @@ def clip(x):
     return tf.clip_by_value(x, 0, 1)
 
 
-def resizeTo(img, resize=512):
+def resizeTo(img, resize_L=800, resize_U=1800):
     height, width = img.shape[0], img.shape[1]
     if height < width:
-        ratio = height / resize
+        ratio = height / resize_L
         long_side = round(width / ratio)
-        resize_shape = (resize, long_side)
+        if long_side >= resize_U:
+            long_side = resize_U
+            resize_shape = (resize_L, long_side)
     else:
-        ratio = width / resize
+        ratio = width / resize_L
         long_side = round(height / ratio)
-        resize_shape = (long_side, resize)
+        if long_side >= resize_U:
+            long_side = resize_U
+        resize_shape = (long_side, resize_L)
     return cv2.resize(img, resize_shape, interpolation=cv2.INTER_CUBIC)
 
 
-def imgRandomCrop(src, resize=512, crop=128):
+def imgRandomCrop(src, resize_L=800, resize_U=1800, crop=128):
     img = getImg(src)
-    img = resizeTo(img, resize=resize)
+    img = resizeTo(img, resize_L, resize_U)
 
     offset_h = random.randint(0, (img.shape[0] - crop))
     offset_w = random.randint(0, (img.shape[1] - crop))
