@@ -1,7 +1,7 @@
 # coding=utf-8
 import tensorflow as tf
 from GANNetwork.cycleGAN import CycleGAN
-from common.common import getImg, torch_decay, getFiles, saveImg, imgPool, encode, linear_decay, getEdge
+from common.common import getImg, torch_decay, getFiles, saveImg, imgPool, encode, linear_decay, imgRandomCrop
 import numpy as np
 import random
 import threading, os, time, cv2
@@ -37,8 +37,8 @@ tf.app.flags.DEFINE_integer('img_size', 256, 'The size of input img')
 
 FLAGS = tf.app.flags.FLAGS
 
-files_content = getFiles(FLAGS.imgA, 'content')
-files_style = getFiles(FLAGS.imgB, 'style')
+files_A = getFiles(FLAGS.imgA, 'FILE_A')
+files_B = getFiles(FLAGS.imgB, 'FILE_B')
 
 def generateBatch(files, batch_shape):
     while True:
@@ -150,8 +150,8 @@ def train():
         coord = tf.train.Coordinator()
 
         def enqueue(sess):
-            imgA = generateBatch(files_content, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
-            imgB = generateBatch(files_style, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
+            imgA = generateBatch(files_A, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
+            imgB = generateBatch(files_B, (FLAGS.batch_size, FLAGS.img_size, FLAGS.img_size, 3))
             while not coord.should_stop():
                 imgA_batch = next(imgA)
                 imgB_batch = next(imgB)
@@ -170,7 +170,7 @@ def train():
         with tf.device('/device:CPU:0'):
             iteration = global_step1.eval() + 1
 
-      enqueue_thread = []
+        enqueue_thread = []
         for i in range(FLAGS.multi_threads):
             enqueue_thread.append(threading.Thread(target=enqueue, args=[sess]))
             enqueue_thread[i].isDaemon()
