@@ -37,8 +37,8 @@ tf.app.flags.DEFINE_integer('img_size', 256, 'The size of input img')
 
 FLAGS = tf.app.flags.FLAGS
 
-files_content = getFiles(FLAGS.img_content, 'content')
-files_style = getFiles(FLAGS.img_style, 'style')
+files_content = getFiles(FLAGS.imgA, 'content')
+files_style = getFiles(FLAGS.imgB, 'style')
 
 def generateBatch(files, batch_shape):
     while True:
