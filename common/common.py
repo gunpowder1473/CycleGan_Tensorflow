@@ -86,7 +86,7 @@ def resizeTo(img, resize_L=800, resize_U=1800):
         long_side = round(width / ratio)
         if long_side >= resize_U:
             long_side = resize_U
-            resize_shape = (resize_L, long_side)
+        resize_shape = (resize_L, long_side)
     else:
         ratio = width / resize_L
         long_side = round(height / ratio)
