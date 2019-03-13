@@ -46,7 +46,7 @@ def generateBatch(files, batch_shape):
             batch = np.zeros(batch_shape, dtype=np.float32)
             choosed = random.sample(files, batch_shape[0])
             for i, s in enumerate(choosed):
-                batch[i] = augmentor(resizeTo(getImg(s), 800), False)
+                batch[i] = augmentor(resizeTo(getImg(s), 300, 800), False)
                 batch[i] = encode(batch[i])
             yield batch
         except:
