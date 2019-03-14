@@ -68,7 +68,8 @@ class Edge:
 
     def __call__(self, image):
         with tf.variable_scope('edge_net' + self.name, reuse=self.reuse):
-            pre = net.convLayer(image, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
+            result = tf.pad(image, [[0, 0], [3, 3], [3, 3], [0, 0]], mode="REFLECT")
+            pre = net.convLayer(result, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
                                 name='Edge_P', pad='VALID', relu=False)
             result1 = net.convLayer(pre, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
                                     name='Edge_1', pad='VALID', relu='RELU')
