@@ -69,14 +69,14 @@ class Edge:
     def __call__(self, image):
         with tf.variable_scope('edge_net' + self.name, reuse=self.reuse):
             pre = net.convLayer(image, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
-                                name='Edge_P', relu=False)
+                                name='Edge_P', pad='VALID', relu=False)
             result1 = net.convLayer(pre, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
-                                    name='Edge_1', pad='SAME', relu='RELU')
+                                    name='Edge_1', pad='VALID', relu='RELU')
             result2 = net.convLayer(pre, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
-                                    name='Edge_2', pad='SAME', relu='RELU')
-            result = net.convLayer(result1 + result2, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
-                                   relu=False, name='Edge_3')
-            result = tf.tanh(3 * result)
+                                    name='Edge_2', pad='VALID', relu='RELU')
+            result = net.convLayer(result1 + result2, 3, 3, strides=1, Norm='NOT', training=self.is_training,
+                                   relu=False, name='Edge_3', pad='VALID')
+            result = tf.tanh(result)
         self.reuse = True
         return result
 
