@@ -86,13 +86,13 @@ def resizeTo(img, resize_L=800, resize_U=1800):
         long_side = round(width / ratio)
         if long_side >= resize_U:
             long_side = resize_U
-        resize_shape = (resize_L, long_side)
+        resize_shape = (long_side, resize_L)
     else:
         ratio = width / resize_L
         long_side = round(height / ratio)
         if long_side >= resize_U:
             long_side = resize_U
-        resize_shape = (long_side, resize_L)
+        resize_shape = (resize_L, long_side)
     return cv2.resize(img, resize_shape, interpolation=cv2.INTER_CUBIC)
 
 
