@@ -31,7 +31,7 @@ class Generator:
                                        bias=False, Norm=self.Norm, training=self.is_training)
             result = net.transposeConv(result, self.ngf, 3, name='3x3_4', strides=2, pad='SAME', relu='RELU',
                                        bias=False, Norm=self.Norm, training=self.is_training)
-            result = net.convLayer(result, 3, 7, Norm=‘NOT’, training=self.is_training, relu=False, name='7x7_2')
+            result = net.convLayer(result, 3, 7, Norm='NOT', training=self.is_training, relu=False, name='7x7_2')
             result = tf.tanh(result)
         self.reuse = True
         return result
