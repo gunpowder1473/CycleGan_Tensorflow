@@ -75,9 +75,9 @@ class Edge:
                                     name='Edge_1', pad='VALID', relu='RELU')
             result2 = net.convLayer(pre, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
                                     name='Edge_2', pad='VALID', relu='RELU')
-            result = net.convLayer(result1 + result2, 3, 3, strides=1, Norm='NOT', training=self.is_training,
+            result = net.convLayer(result1 + result2, 3, 3, strides=1, Norm=self.Norm, training=self.is_training,
                                    relu=False, name='Edge_3', pad='VALID')
-            result = tf.sigmoid(result) * 2 - 1
+            result = tanh(3 * result)
         self.reuse = True
         return result
 
