@@ -41,9 +41,9 @@ files_A = getFiles(FLAGS.imgA, 'FILE_A')
 files_B = getFiles(FLAGS.imgB, 'FILE_B')
 
 def generateBatch(files, batch_shape):
+    batch = np.zeros(batch_shape, dtype=np.float32)
     while True:
         try:
-            batch = np.zeros(batch_shape, dtype=np.float32)
             choosed = random.sample(files, batch_shape[0])
             for i, s in enumerate(choosed):
                 batch[i] = imgRandomCrop(s, 256, 256, FLAGS.img_size)
