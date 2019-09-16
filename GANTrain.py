@@ -181,8 +181,7 @@ def train():
             try:
                 start = time.time()
 
-                imgA_batch = sess.run(imgA_batch_op)
-                imgB_batch = sess.run(imgB_batch_op)
+                imgA_batch, imgB_batch = sess.run([imgA_batch_op, imgB_batch_op])
                 # output = sess.run({'train': train_op, 'global_step': global_step1},
                 #     feed_dict={net.inputA: imgA_batch, net.inputB: imgB_batch})
                 output = sess.run(
